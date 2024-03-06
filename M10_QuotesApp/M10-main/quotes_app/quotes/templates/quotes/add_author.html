@@ -1,0 +1,11 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+    <h1>Add Author</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Author</button>
+    </form>
+    <a href="{% url 'quotes:main' %}">Повернутись на головну сторінку</a>
+{% endblock %}

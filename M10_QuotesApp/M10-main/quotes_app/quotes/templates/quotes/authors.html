@@ -1,0 +1,22 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+    <h1>Authors</h1>
+    <ul>
+        {% for author in authors %}
+            <li>
+                <strong>{{ author.fullname }}</strong><br>
+                Born: {{ author.born_date }} in {{ author.born_location }}<br>
+                Description: {{ author.description }}
+            </li>
+        {% empty %}
+            <li>No authors available</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Повернутись на головну сторінку</a><br>
+    <a href="/add_author/">Add Author</a><br>
+    <a href="/add_quote/">Add Quote</a><br>
+    <a href="/login/">Login</a><br>
+    
+{% endblock %}
