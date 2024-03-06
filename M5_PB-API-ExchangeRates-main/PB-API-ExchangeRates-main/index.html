@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+    <form id="formChat">
+        <input type="text" id="textField" />
+        <button type="button" onclick="sendMessage()">Send message</button>
+    </form>
+    <div id="subscribe"></div>
+    <script>
+        const socket = new WebSocket('ws://localhost:8080');
+
+        socket.addEventListener('open', (event) => {
+            console.log('WebSocket з\'єднано.');
+        });
+
+        socket.addEventListener('message', (event) => {
+            const message = event.data;
+            const elMsg = document.createElement('div');
+            elMsg.textContent = message;
+            document.getElementById('subscribe').appendChild(elMsg);
+        });
+
+        socket.addEventListener('error', (event) => {
+            console.error('Сталася помилка WebSocket: ', event);
+        });
+
+        socket.addEventListener('close', (event) => {
+            if (event.wasClean) {
+                console.log('WebSocket закрито коректно, код закриття: ', event.code);
+            } else {
+                console.error('WebSocket з\'єднання закрито некоректно');
+            }
+        });
+
+        function sendMessage() {
+            const message = document.getElementById('textField').value;
+            socket.send(message);
+            document.getElementById('textField').value = '';
+        }
+    </script>
+</body>
+</html>
